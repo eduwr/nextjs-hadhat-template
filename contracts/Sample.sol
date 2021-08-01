@@ -3,17 +3,35 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract Sample {
-    string private name;
+    string public contractName;
+    address payable public owner;
+    uint public etherReceived;
 
     constructor(string memory _name) {
-        name = _name;
+        contractName = _name;
+        owner = payable(address(msg.sender));
+        etherReceived = 0;
     }
 
     function changeName(string memory _name) public {
-        name = _name;
+        contractName = _name;
     }
 
-    function getName() public view returns (string memory) {
-        return name;
+    function sendMeEthers() external payable {
+        bool sent = owner.send(msg.value);
+        etherReceived = msg.value + etherReceived;
+        require(sent, "Failed to send Ether");
+    }
+
+    function showName() public view returns (string memory) {
+        return contractName;
+    }
+
+    function showEtherReceived() public view returns (uint) {
+        return etherReceived;
+    }
+
+    function showOwnerAddress() public view returns (address) {
+        return address(owner);
     }
 }

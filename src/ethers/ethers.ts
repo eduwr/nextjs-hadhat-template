@@ -1,19 +1,15 @@
-declare let window: any;
-
 import { providers } from "ethers";
 
 const HARDHAT_TEST_URL = "http://127.0.0.1:8545/";
 
-const isMetaMaskInstalled = () => {
-  //Have to check the ethereum binding on the window object to see if it's installed
-  const { ethereum } = window;
-  return Boolean(ethereum && ethereum.isMetaMask);
-};
-let ether;
+let ether: providers.JsonRpcProvider | providers.Web3Provider;
 
-if (isMetaMaskInstalled()) {
-  window.ethereum.request({ method: "eth_requestAccounts" });
-  ether = new providers.Web3Provider(window.ethereum);
+if (
+  typeof window !== "undefined" &&
+  typeof (window as any).ethereum !== "undefined"
+) {
+  (window as any).ethereum.request({ method: "eth_requestAccounts" });
+  ether = new providers.Web3Provider((window as any).ethereum);
 } else {
   ether = new providers.JsonRpcProvider(HARDHAT_TEST_URL);
 }
