@@ -1,9 +1,14 @@
-import { expect } from "chai";
+import * as chai from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
+import { solidity } from "ethereum-waffle";
+
+import { Sample } from "../typechain/Sample";
+
+chai.use(solidity);
+const { expect } = chai;
 
 describe("Sample", () => {
-  let sample: Contract;
+  let sample: Sample;
   const INITIAL_NAME = "My Sample Contract";
 
   before(async () => {
