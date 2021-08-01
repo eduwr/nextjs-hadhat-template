@@ -1,7 +1,9 @@
-const { expect } = require("chai");
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import { Contract } from "ethers";
 
 describe("Sample", () => {
-  let sample;
+  let sample: Contract;
   const INITIAL_NAME = "My Sample Contract";
 
   before(async () => {
