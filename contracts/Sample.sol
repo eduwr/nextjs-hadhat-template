@@ -13,6 +13,11 @@ contract Sample {
         etherReceived = 0;
     }
 
+    function getOwnerAddress() public view returns (address) {
+        return owner;
+    }
+
+
     function changeName(string memory _name) public {
         contractName = _name;
     }
